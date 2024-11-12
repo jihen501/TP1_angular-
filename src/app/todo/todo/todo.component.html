@@ -1,18 +1,47 @@
-<div class="row">
-  <div class="col">
-    <ol class="list-group">
-      @for (todo of todos; track todo) {
-        <li class="list-group-item">
-          {{todo.name}} : {{todo.content}}
-          <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i>
-        </li>
+<div>
+  <input type="text" class="form-control" #nameInput (change)="setTodoName(nameInput.value)"/>
+  <input type="text" class="form-control" #contentInput  (change)="setTodoContent(contentInput.value)"/>
+<button (click)="addTodo(nameInput,contentInput)"
+    class="btn btn-primary m-2" [disabled]="todo().name.trim() || todo().content.trim()">add</button>
+</div>
+
+<div>
+  <div>
+    <ul>
+      <h3>waiting</h3>
+      @for(todo of todos() ;track todo.id){
+      <li>
+        @if (todo.status === 'waiting') {
+        {{ todo.name }} : {{ todo.content }}
+        <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i
+        >}
+      </li>
       }
-    </ol>
+    </ul>
+    <ul>
+      <h3>In Progress Todos</h3>
+
+      @for(todo of todos() ;track todo.id){
+      <li>
+        @if (todo.status === 'in progress') {
+        {{ todo.name }} : {{ todo.content }}
+        <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i
+        >}
+      </li>
+      }
+    </ul>
   </div>
-  <div class="col">
-    name: <input [(ngModel)]="todo.name" type="text" class="form-control">
-    content: <input [(ngModel)]="todo.content" type="text" class="form-control">
-    <button (click)="addTodo()" [disabled]="!todo.name.trim() || !todo.content.trim()"
-    class="btn btn-primary m-2">add</button>
+  <div>
+    <ul>
+      <h3>Done Todos</h3>
+      @for(todo of todos() ;track todo.id){
+      <li>
+        @if (todo.status === 'done') {
+        {{ todo.name }} : {{ todo.content }}
+        <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i
+        >}
+      </li>
+      }
+    </ul>
   </div>
 </div>

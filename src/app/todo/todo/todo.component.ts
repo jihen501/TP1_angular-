@@ -1,7 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Todo } from '../model/todo';
 import { TodoService } from '../service/todo.service';
-
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -12,20 +11,38 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [FormsModule],
 })
+
 export class TodoComponent {
   private todoService = inject(TodoService);
-
-  todos: Todo[] = [];
-  todo = new Todo();
+  i = 0; 
+  todos = signal<Todo[]>([]);
+  todo = signal(new Todo(this.i));
   constructor() {
-    this.todos = this.todoService.getTodos();
+    this.todos.set(this.todoService.getTodos());
   }
-  addTodo() {
-    this.todoService.addTodo(this.todo);
-    this.todo = new Todo();
+  addTodo(nameInput: HTMLInputElement, contentInput: HTMLInputElement) {
+    console.log('addTodo');
+    console.log(this.todo()); 
+    this.todoService.addTodo(this.todo());
+    this.i++;
+    this.todo.set(new Todo(this.i));
+    this.todoService.logTodos()
+    this.todos.set(this.todoService.getTodos());
+    nameInput.value = '';
+    contentInput.value = '';
   }
 
   deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo);
+    this.todos.set(this.todoService.getTodos());
+    this.todoService.logTodos();
+  }
+
+  setTodoName(name: string) {
+    this.todo.set({ ...this.todo(), name: name });
+  }
+
+  setTodoContent(content: string) {
+    this.todo.set({ ...this.todo(), content: content });
   }
 }
