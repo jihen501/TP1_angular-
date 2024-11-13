@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Todo } from '../model/todo';
 import { LoggerService } from '../../services/logger.service';
+import { TodoStatus } from '../model/todoStatus';
 
 
 @Injectable({
@@ -37,6 +38,11 @@ export class TodoService {
    */
   deleteTodo(todo: Todo) : void {
     this.todos.set(this.todos().filter(t => t !== todo));
+  }
+
+  changeStatus(todo: Todo, status: TodoStatus): void {
+    const index = this.todos().findIndex((t) => t === todo);
+    this.todos()[index].status = status;
   }
 
   /**

@@ -1,47 +1,58 @@
-<div>
-  <input type="text" class="form-control" #nameInput (change)="setTodoName(nameInput.value)"/>
-  <input type="text" class="form-control" #contentInput  (change)="setTodoContent(contentInput.value)"/>
-<button (click)="addTodo(nameInput,contentInput)"
-    class="btn btn-primary m-2" [disabled]="todo().name.trim() || todo().content.trim()">add</button>
+<div class="d-flex my-5">
+  <input type="text" class="form-control" [(ngModel)]="todo().name" />
+  <input type="text" class="form-control" [(ngModel)]="todo().content" />
+  <button
+    (click)="addTodo()"
+    class="btn btn-primary m-2"
+    [disabled]="!todo().name.trim() || !todo().content.trim()"
+  >
+    add
+  </button>
 </div>
 
-<div>
-  <div>
-    <ul>
-      <h3>waiting</h3>
-      @for(todo of todos() ;track todo.id){
-      <li>
-        @if (todo.status === 'waiting') {
-        {{ todo.name }} : {{ todo.content }}
-        <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i
-        >}
-      </li>
-      }
-    </ul>
-    <ul>
-      <h3>In Progress Todos</h3>
-
-      @for(todo of todos() ;track todo.id){
-      <li>
-        @if (todo.status === 'in progress') {
-        {{ todo.name }} : {{ todo.content }}
-        <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i
-        >}
-      </li>
-      }
-    </ul>
+<div class="row">
+  <div class="col-4 bg-danger-subtle p-2">
+    <h3 class="p-2">waiting</h3>
+    @for(todo of todos() ;track todo.id){ @if (todo.status === 'waiting') {
+    <div class="d-flex align-items-center">
+      <span>{{ todo.name }} : {{ todo.content }} </span>
+      <i
+        (click)="deleteTodo(todo)"
+        class="fa fa-trash ps-4"
+        aria-hidden="true"
+      ></i>
+      <i
+        (click)="changeStatus(todo, 'in progress')"
+        class="fa fa-play ps-3"
+      ></i>
+    </div>
+    } }
   </div>
-  <div>
-    <ul>
-      <h3>Done Todos</h3>
-      @for(todo of todos() ;track todo.id){
-      <li>
-        @if (todo.status === 'done') {
-        {{ todo.name }} : {{ todo.content }}
-        <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i
-        >}
-      </li>
-      }
-    </ul>
+  <div class="col-4 bg-primary-subtle p-2">
+    <h3 class="p-2">In Progress</h3>
+    @for(todo of todos() ;track todo.id){ @if (todo.status === 'in progress') {
+    <div class="d-flex align-items-center">
+      {{ todo.name }} : {{ todo.content }}
+      <i
+        (click)="deleteTodo(todo)"
+        class="fa fa-trash ps-4"
+        aria-hidden="true"
+      ></i>
+      <i (click)="changeStatus(todo, 'done')" class="fa fa-check ps-3"></i>
+    </div>
+    }}
+  </div>
+  <div class="col-4 bg-success p-2">
+    <h3 class="p-2">Done</h3>
+    @for(todo of todos() ;track todo.id){ @if (todo.status === 'done') {
+    <div class="d-flex align-items-center">
+      {{ todo.name }} : {{ todo.content }}
+      <i
+        (click)="deleteTodo(todo)"
+        class="fa fa-trash ps-4"
+        aria-hidden="true"
+      ></i>
+    </div>
+    } }
   </div>
 </div>

@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Todo } from '../model/todo';
 import { TodoService } from '../service/todo.service';
 import { FormsModule } from '@angular/forms';
+import { TodoStatus } from '../model/todoStatus';
 
 @Component({
     selector: 'app-todo',
@@ -20,29 +21,23 @@ export class TodoComponent {
   constructor() {
     this.todos.set(this.todoService.getTodos());
   }
-  addTodo(nameInput: HTMLInputElement, contentInput: HTMLInputElement) {
-    console.log('addTodo');
-    console.log(this.todo()); 
+  addTodo() {
     this.todoService.addTodo(this.todo());
     this.i++;
     this.todo.set(new Todo(this.i));
     this.todoService.logTodos()
     this.todos.set(this.todoService.getTodos());
-    nameInput.value = '';
-    contentInput.value = '';
+
   }
 
   deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo);
     this.todos.set(this.todoService.getTodos());
-    this.todoService.logTodos();
   }
-
-  setTodoName(name: string) {
-    this.todo.set({ ...this.todo(), name: name });
-  }
-
-  setTodoContent(content: string) {
-    this.todo.set({ ...this.todo(), content: content });
+  
+  changeStatus(todo: Todo , status :TodoStatus) {
+    this.todoService.changeStatus(todo,status);
+    this.todos.set(this.todoService.getTodos());
+  
   }
 }
