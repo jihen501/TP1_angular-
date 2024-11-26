@@ -1,14 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Cv } from "../model/cv";
-import { Observable, Subject } from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, of, shareReplay, Subject } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { API } from "../../../config/api.config";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable({
   providedIn: "root",
 })
 export class CvService {
   private cvs: Cv[] = [];
+
+  private cvsSubject = new BehaviorSubject<Cv[]>([]);
+  cvs$ = this.cvsSubject.asObservable();
+
   /**
    * Le subject permettant de créer le flux des cvs sélectionnés
    */
@@ -17,7 +22,7 @@ export class CvService {
    * Le flux des cvs sélectionnés
    */
   selectCv$ = this.#selectCvSuject$.asObservable();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService,) {
     this.cvs = [
       new Cv(1, "aymen", "sellaouti", "teacher", "as.jpg", "1234", 40),
       new Cv(2, "skander", "sellaouti", "enfant", "       ", "1234", 4),
@@ -42,10 +47,34 @@ export class CvService {
    * @returns CV[]
    *
    */
-  getCvs(): Observable<Cv[]> {
-    return this.http.get<Cv[]>(API.cv);
+
+  getCvs(): Observable<Cv> {
+    this.http.get<Cv[]>(API.cv).pipe(catchError(() => {
+      this.toastr.error(
+        `Attention!! Les données sont fictives, problème avec le serveur.
+          Veuillez contacter l'admin.`
+      );
+      return of(this.getFakeCvs());
+    })).subscribe((cvs) => this.cvsSubject.next(cvs));
+    return this.selectCv$;
+  }
+  /**
+   * Retourne un flux des juniors (age < 40)
+   */
+  getJuniors(): Observable<Cv[]> {
+    return this.cvs$.pipe(
+      map((cvs) => cvs.filter((cv) => cv.age < 40))
+    );
   }
 
+  /**
+ * Retourne un flux des seniors (age >= 40)
+ */
+  getSeniors(): Observable<Cv[]> {
+    return this.cvs$.pipe(
+      map((cvs) => cvs.filter((cv) => cv.age >= 40))
+    );
+  }
   /**
    *
    * supprime un cv par son id de l'API

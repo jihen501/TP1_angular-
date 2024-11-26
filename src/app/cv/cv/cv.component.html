@@ -3,8 +3,64 @@
     <div class="alert alert-warning">
       {{ date | date : "full" | uppercase }}
     </div>
-    <app-list [cvs]="cvs$ | async"></app-list>
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">Liste des CVs</h2>
+      <!-- Bootstrap Tabs -->
+      <ul class="nav nav-tabs" id="cvTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="juniors-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#juniors"
+            type="button"
+            role="tab"
+            aria-controls="juniors"
+            aria-selected="true"
+          >
+            Juniors
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="seniors-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#seniors"
+            type="button"
+            role="tab"
+            aria-controls="seniors"
+            aria-selected="false"
+          >
+            Seniors
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content mt-3" id="cvTabContent">
+        <!-- Juniors Tab Content -->
+        <div
+          class="tab-pane fade show active"
+          id="juniors"
+          role="tabpanel"
+          aria-labelledby="juniors-tab"
+        >
+          <app-list [cvs]="juniors$ | async"></app-list>
+        </div>
+
+        <!-- Seniors Tab Content -->
+        <div
+          class="tab-pane fade"
+          id="seniors"
+          role="tabpanel"
+          aria-labelledby="seniors-tab"
+        >
+          <app-list [cvs]="seniors$ | async"></app-list>
+        </div>
+      </div>
+    </div>
   </div>
+
   <div class="col">
     <app-cv-card [cv]="selectedCv$ | async"></app-cv-card>
   </div>
