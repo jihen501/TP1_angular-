@@ -13,20 +13,13 @@ export class MasterDetailsCvComponent {
 
   cvs$: Observable<Cv[]>;
   selectedCv$: Observable<Cv>;
-  constructor(private cvService: CvService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private cvService: CvService, private router: Router,activatedRoute: ActivatedRoute) {
     this.selectedCv$ = this.cvService.getCvs();
     this.cvs$ = this.cvService.getAllCvs();
     this.selectedCv$.subscribe(cv => {
+      if (this.router.url.includes('cv/list')) {
       this.router.navigate(['cv/list', cv.id]);
-    });
-    /*this.activatedRoute.paramMap.subscribe(params => {
-      const id = +params.get('id')!;
-      if (id) {
-        this.cvService.selectCvById(id);
       }
-    });*/
+    });
   }
-
-
-
 }

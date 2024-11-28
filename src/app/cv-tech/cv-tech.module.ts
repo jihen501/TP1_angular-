@@ -29,6 +29,7 @@ const routes: Route[] = [
   },
   { path: "add", component: AddCvComponent, canActivate: [AuthGuard] },
   { path: ":id", component: DetailsCvComponent },
+ 
 ]
 @NgModule({
   declarations: [CvComponent,

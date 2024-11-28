@@ -21,13 +21,14 @@ export class DetailsCvComponent implements OnInit {
     private toastr: ToastrService,
     public authService: AuthService
   ) { }
-/*
+
   ngOnInit() {
     this.cv$ = this.activatedRoute.data.pipe(
       map(data => data['cv'])
     );
   }
- */
+  
+ /*
   ngOnInit() {
     
     this.cv$ = this.activatedRoute.params.pipe(
@@ -42,7 +43,7 @@ export class DetailsCvComponent implements OnInit {
         );
       })
     );
-  }
+  }*/
   deleteCv(cv: Cv) {
     this.cvService.deleteCvById(cv.id).pipe(
       catchError(() => {

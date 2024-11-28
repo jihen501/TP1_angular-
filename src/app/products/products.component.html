@@ -3,7 +3,7 @@
 >
 <button class="btn btn-primary" [disabled]="disableButton" (click)="loadMore()"> More Products</button>
 <div class="alert alert-warning">
-  Product Number: {{productsList.pro.limit}}
+  Product Number: {{productsList.length}}
 </div>
 <div class="row">
   <div class="col-4" *ngFor="let product of productsList">

@@ -70,7 +70,7 @@ export class CvService {
       map((cvs) => cvs.filter((cv) => cv.age < 40))
     );
   }
-
+  
   /**
  * Retourne un flux des seniors (age >= 40)
  */
