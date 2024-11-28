@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Cv } from '../model/cv';
-import { EmbaucheService } from '../services/embauche.service';
 import { ToastrService } from 'ngx-toastr';
+import { EmbaucheService } from '../services/embauche.service';
 
 @Component({
   selector: 'app-cv-card',
@@ -12,10 +12,10 @@ export class CvCardComponent {
   constructor(
     private embaucheService: EmbaucheService,
     private toastr: ToastrService
-  ) {}
+  ) { }
   @Input() cv: Cv | null = null;
 
-  ngOnInit() {}
+  ngOnInit() { }
   embaucher() {
     if (this.cv) {
       if (this.embaucheService.embauche(this.cv)) {

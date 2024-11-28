@@ -1,0 +1,13 @@
+<form [formGroup]="form">
+  <input type="text" class="form-control" formControlName="search" />
+</form>
+
+<ul class="list-group" *ngIf="cvs$ | async as cvs">
+  <li
+    class="list-group-item"
+    *ngFor="let cv of cvs"
+    (click)="onSelectCv(cv.id)"
+  >
+    {{ cv.name }}
+  </li>
+</ul>

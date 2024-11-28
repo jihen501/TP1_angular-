@@ -4,10 +4,10 @@ import {
   FormBuilder,
   Validators,
 } from "@angular/forms";
-import { CvService } from "../services/cv.service";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { APP_ROUTES } from "src/config/routes.config";
+import { CvService } from "../services/cv.service";
 import { Cv } from "../model/cv";
 
 @Component({

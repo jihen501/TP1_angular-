@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Cv } from "../model/cv";
+import { Cv } from "../../cv-tech/model/cv";
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, Subject } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { API } from "../../../config/api.config";
@@ -57,6 +57,10 @@ export class CvService {
       return of(this.getFakeCvs());
     })).subscribe((cvs) => this.cvsSubject.next(cvs));
     return this.selectCv$;
+  }
+
+  getAllCvs(): Observable<Cv[]> {
+    return this.cvs$;
   }
   /**
    * Retourne un flux des juniors (age < 40)

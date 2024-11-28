@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { Cv } from "../model/cv";
-import { CvService } from "../services/cv.service";
+import { Cv } from "../../model/cv";
 import { catchError, map, Observable, of } from "rxjs";
+import { CvService } from "../../services/cv.service";
 @Component({
   selector: "app-cv",
   templateUrl: "./cv.component.html",

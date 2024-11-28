@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cv } from '../model/cv';
+import { Cv } from '../../cv-tech/model/cv';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,7 @@ import { Cv } from '../model/cv';
 export class EmbaucheService {
   private embauchees: Cv[] = [];
 
-  constructor() {}
+  constructor() { }
 
   /**
    *

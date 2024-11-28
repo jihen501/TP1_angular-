@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { EmbaucheService } from '../services/embauche.service';
 import { Cv } from '../model/cv';
+import { EmbaucheService } from '../services/embauche.service';
 
 @Component({
   selector: 'app-embauche',
