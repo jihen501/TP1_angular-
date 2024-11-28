@@ -29,7 +29,7 @@ export class CvComponent {
   selectedCv = signal<Cv | null>(null);
   /*   selectedCv: Cv | null = null; */
   date = new Date();
-
+  
   constructor() {
     this.cvService.getCvs().subscribe({
       next: (cvs) => {

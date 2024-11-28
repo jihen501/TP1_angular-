@@ -1,7 +1,7 @@
 import { Directive,HostBinding, HostListener } from '@angular/core';
 
 @Directive({
-  selector:'input[appRainbowText], textarea[appRainbowText]',
+  selector:'input[appRainbowText]',
   standalone: true
 })
 export class RainbowTextDirective {
@@ -15,9 +15,7 @@ export class RainbowTextDirective {
   @HostListener('keyup')
   onKeyUp() {
     const randomColor = this.colors[Math.floor(Math.random() * this.colors.length)];
-    const randomColor2= this.colors[Math.floor(Math.random() * this.colors.length)];
-
     this.color = randomColor;
-    this.borderColor = randomColor2;
+    this.borderColor = randomColor;
   }
 }
