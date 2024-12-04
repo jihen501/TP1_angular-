@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CvService } from '../services/cv.service';
@@ -13,13 +14,13 @@ export class MasterDetailsCvComponent {
 
   cvs$: Observable<Cv[]>;
   selectedCv$: Observable<Cv>;
-  constructor(private cvService: CvService, private router: Router,activatedRoute: ActivatedRoute) {
+  constructor(private cvService: CvService, private router: Router, activatedRoute: ActivatedRoute) {
     this.selectedCv$ = this.cvService.getCvs();
     this.cvs$ = this.cvService.getAllCvs();
-    this.selectedCv$.subscribe(cv => {
-      if (this.router.url.includes('cv/list')) {
-      this.router.navigate(['cv/list', cv.id]);
-      }
-    });
+    this.selectedCv$
+      .pipe(takeUntilDestroyed())
+      .subscribe(cv => {
+        this.router.navigate(['cv/list', cv.id]);
+      });
   }
 }

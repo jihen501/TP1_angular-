@@ -19,7 +19,7 @@ const routes: Route[] = [
     path: "",
     component: FrontComponent,
     children: [
-      { path: "todo", loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule) },
+      { path: "todo", loadChildren: () => import('./todo/todo.module') },
       { path: "word", component: MiniWordComponent },
     ],
   },
