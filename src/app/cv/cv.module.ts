@@ -11,10 +11,3 @@ export const cvRoutes: Routes = [
     { path: 'add', component: AddCvComponent, canActivate: [AuthGuard] },
     { path: ':id', component: DetailsCvComponent },
 ];
-
-@NgModule({
-    declarations: [],
-    imports: [RouterModule.forChild(cvRoutes)],
-    exports: [RouterModule],
-})
-export class CvModule { }

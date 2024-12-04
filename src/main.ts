@@ -7,25 +7,27 @@ import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { AppRoutingModule } from './app/app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { isDevMode, importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app-routing.module';
 
 
 bootstrapApplication(AppComponent, {
     providers: [
         importProvidersFrom(BrowserModule, FormsModule, // required animations module
-        ToastrModule.forRoot(), // ToastrModule added
-        AppRoutingModule, ReactiveFormsModule, ServiceWorkerModule.register("ngsw-worker.js", {
-            enabled: !isDevMode(),
-            // Register the ServiceWorker as soon as the application is stable
-            // or after 30 seconds (whichever comes first).
-            registrationStrategy: "registerWhenStable:30000",
-        })),
+            ToastrModule.forRoot(), // ToastrModule added
+            ReactiveFormsModule, ServiceWorkerModule.register("ngsw-worker.js", {
+                enabled: !isDevMode(),
+                // Register the ServiceWorker as soon as the application is stable
+                // or after 30 seconds (whichever comes first).
+                registrationStrategy: "registerWhenStable:30000",
+            })),
         AuthInterceptorProvider,
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimations(),
+        provideRouter(routes)
     ]
 })
-  .catch(err => console.error(err));
+    .catch(err => console.error(err));
